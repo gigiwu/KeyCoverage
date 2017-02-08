@@ -1,16 +1,15 @@
 var fs = require('fs');
 var natural = require('natural');
 var NGrams = natural.NGrams;
-//readinput
+// read input
 var inputFile = './source.txt';
 var corpus = fs.readFileSync(inputFile, 'utf8');
+// to store term frequency map
 var freqMap = {};
 
 tokenizer = new natural.WordTokenizer();
-console.log(tokenizer.tokenize("  your dog has fleas.  "));
 
 corpus.split(/\r?\n/).forEach(function(line){
-  //console.log('tok:'+natural.PorterStemmer.tokenizeAndStem(line));
   //preprocess(line.trim().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()\']/g,""));
   preprocess(tokenizer.tokenize(line));
 });
@@ -34,18 +33,7 @@ function preprocess(data){
     putNgramIntoFreqMap(res,i);
   }
 
-  /**
-  NGrams.ngrams(res,2).forEach(function(callback, idx, ngram){
-    var term = ngram[idx].join(" ");
-    putFreqMap(term);
-  });
-
-  //3-gram
-  NGrams.ngrams(res,3).forEach
-**/
-
 }
-
 
 function putFreqMap(term){
   if(!freqMap[term]){
@@ -60,5 +48,3 @@ function putNgramIntoFreqMap(corpus,n){
     putFreqMap(term);
   });
 }
-console.log(NGrams.bigrams('some words here'));
-console.log(NGrams.bigrams(['some',  'words',  'here']));

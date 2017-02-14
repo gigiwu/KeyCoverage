@@ -1,8 +1,11 @@
+var express = require('express');
+var router = express.Router();
+
 const fs = require('fs');
 const natural = require('natural');
 const NGrams = natural.NGrams;
 // read input
-const inputFile = './source.txt';
+const inputFile = '../source.txt';
 const corpus = fs.readFileSync(inputFile, 'utf8');
 // to store term frequency map
 const tokenizer = new natural.WordTokenizer();
@@ -47,9 +50,26 @@ const getTopNgram = (k, n, corpus) => {
     .map(key=>[key, freqMap[key]]);
 }
 
-const grams2 = getTopNgram(10, 2, corpus);
-const grams3 = getTopNgram(10, 3, corpus);
-const grams4 = getTopNgram(10, 4, corpus);
-console.log(grams2);
-console.log(grams3);
-console.log(grams4);
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  console.log(req.query);
+  const k = parseInt(req.query.k);
+  const n = parseInt(req.query.n);
+  res.json({
+    result: getTopNgram(k, n, corpus),
+    corpus: corpus,
+  });
+  //res.render('index', { title: 'Express' });
+});
+
+router.post('/topngram', (req, res) => {
+  const k = req.body.k;
+  const n = req.body.n;
+  const corpus = req.body.corpus;
+  console.log(corpus);
+  res.json({
+    result: getTopNgram(k, n, corpus),
+  });
+});
+
+module.exports = router;

@@ -4,8 +4,10 @@
   "description": "",
   "main": "KeyCoverage.js",
   "dependencies": {
+    "fetch-promise": "^1.0.2",
     "fs": "0.0.1-security",
-    "natural": "^0.4.0"
+    "natural": "^0.4.0",
+    "node-fetch": "^1.6.3"
   },
   "devDependencies": {},
   "scripts": {
